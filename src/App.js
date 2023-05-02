@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Row, Col, Checkbox, Layout, Menu, Select,Input, Button } from 'antd';
-
+import { Row, Col, Checkbox, Layout, Menu, Select,Input, Button, Card, Space, Typography } from 'antd';
+import axios from 'axios';
+const { Title } = Typography;
 const { Option } = Select;
 const { SubMenu } = Menu;
 const { Content } = Layout;
@@ -9,6 +10,7 @@ const App = () => {
   const userId = "xyz"
   const [checkedItems, setCheckedItems] = useState([]);
   const [ageChecked, setAgeChecked] = useState(false);
+  const [output, setOutput] = useState({})
   const [ageValue, setAgeValue] = useState("Below 18");
   const [mentalHealthChecked, setMentalHealthChecked] = useState(false);
   const [mentalHealthValue, setMentalHealthValue] = useState("very serious");
@@ -173,13 +175,44 @@ const App = () => {
     setSelfCareValue(e.key);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    var data = {
+      // "core_issue": currentIssue,
+      "age": ageChecked? ageValue : null,
+      "gender": genderChecked? genderValue : null,
+      "profession": professionChecked? professionValue : null,
+      "discomforts": mt
+    }
     console.log(currentIssue, mt,selfCareValue, professionValue, medicationValue, genderValue, mentalHealthValue, ageValue );
-    //here
+    try {
+      let config = {
+        method: 'POST',
+        url: `http://127.0.0.1:8000/gen/${currentIssue}`,
+        data:data,
+        headers: {
+          Authorization: 'Bearer ' + "askjfas"
+        }
+      };
+      axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      setOutput(response.data)
+    })}
+    catch (error) {
+      console.log(error);
+    }
+
   };
   return (
     <Layout>
+      <div style={{
+      display: 'flex', width: 700, padding: 30, justifyContent: "center"
+      }}>
+      <>
+        <Title>Prompt Playground</Title>
+      </>
+    </div>
       <Content style={{ textAlign: 'center' }}>
         <Row>
           <Col span={12}>
@@ -196,9 +229,9 @@ const App = () => {
           </SubMenu>
         </Menu>
       </div>
-      <br />
+      {/* <br />
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-      <Checkbox onChange={handleMentalHealthCheck}>Seriousness on mentak health</Checkbox>
+      <Checkbox onChange={handleMentalHealthCheck}>Seriousness on mental health</Checkbox>
         <Menu onClick={handleMenuMentalHealthClick}>
           <SubMenu key="seriousness-submenu" title={mentalHealthValue} disabled={!mentalHealthChecked}>
             <Menu.Item key="just exploring">just exploring</Menu.Item>
@@ -207,7 +240,7 @@ const App = () => {
             <Menu.Item key="very serious">very serious</Menu.Item>
           </SubMenu>
         </Menu>
-      </div>
+      </div> */}
       <br />
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
       <Checkbox onChange={handleGenderCheck}>Gender</Checkbox>
@@ -219,7 +252,7 @@ const App = () => {
           </SubMenu>
         </Menu>
       </div>
-      <br />
+      {/* <br />
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
       <Checkbox onChange={handleMedicationCheck}>Medication</Checkbox>
         <Menu onClick={handleMenuMedicationClick}>
@@ -230,7 +263,7 @@ const App = () => {
             <Menu.Item key="yes, taking medications">yes, taking medications</Menu.Item>
           </SubMenu>
         </Menu>
-      </div>
+      </div> */}
       <br />
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
       <Checkbox onChange={handleProfessionCheck}>Profession</Checkbox>
@@ -287,11 +320,13 @@ const App = () => {
     </div>
           </Col>
           <Col span={12}>
-            {checkedItems.length > 0 ? (
-              checkedItems.map((item) => <div key={item.id}>{item.label}</div>)
-            ) : (
-              <div>No items selected</div>
-            )}
+            <div style={{display: "flex", justifyContent:"center", paddingTop: 50}}>
+              <Space align="center" size={16}>
+                <Card size="small" title="GPT response" style={{ width: 400 }}>
+                  <h4>{JSON.stringify(output)}</h4>
+                </Card>
+              </Space>
+            </div>
           </Col>
         </Row>
       </Content>
