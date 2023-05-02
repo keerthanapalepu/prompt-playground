@@ -185,13 +185,14 @@ const App = () => {
       "discomforts": mt
     }
     console.log(currentIssue, mt,selfCareValue, professionValue, medicationValue, genderValue, mentalHealthValue, ageValue );
+    var token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImU3OTMwMjdkYWI0YzcwNmQ2ODg0NGI4MDk2ZTBlYzQzMjYyMjIwMDAiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiS2VlcnRoYW5hIFBhbGVwdSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQUNOUEV1OXpaU3Y3dzdJMWd4bjZDNnFQc1VzTDI0VHdsbmNEb2s4LTJYRjZobHM9czk2LWMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYmVpbmctYmV0YSIsImF1ZCI6ImJlaW5nLWJldGEiLCJhdXRoX3RpbWUiOjE2NjQzNDk5NjUsInVzZXJfaWQiOiJtem5UbWdrdVkyYXVKTUhGNVhrZkVBS1A2RXoyIiwic3ViIjoibXpuVG1na3VZMmF1Sk1IRjVYa2ZFQUtQNkV6MiIsImlhdCI6MTY4MzAzNDY0OSwiZXhwIjoxNjgzMDM4MjQ5LCJlbWFpbCI6ImtlZXJ0aGFuYXBhbGVwdTIwMDJAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMTU2NDA4NjYzMTU2NTEwNjczMDEiXSwiZW1haWwiOlsia2VlcnRoYW5hcGFsZXB1MjAwMkBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJnb29nbGUuY29tIn19.SiL6cfoJ79gpZOIHodq9f1Hbp2tDS0IaiKTmHLlKboBjyT8PMEiLVEFhmBwme_fuT8E9ssCS5cj6LqtWBF7j4u0MUL7SRoxAvyw9zJ2P9V60B3wTENsetdMOqxMwhrG-U_cJWx5NrEW7xLQDOeCXS3C3u_GNgAPHO9zARKN4CLgRX61aHxDTpEOBeBDd4oqWgSGjuo5Mc4CUfWuBCtkFoTkLbrPyKMZpCUGjNP8a58rR1UiUpGyvBF-4EQvUvrJwx0E26qBJ0AI_Tv8JkkIUhfV5hHdNPKD6znik4_AzeT8-hkVQ-tGxwGhChxPvrNubGBbzpy2NWAtbbl695eOCCQ"
     try {
       let config = {
         method: 'POST',
         url: `http://127.0.0.1:8000/gen/${currentIssue}`,
         data:data,
         headers: {
-          Authorization: 'Bearer ' + "askjfas"
+          Authorization: 'Bearer ' + token
         }
       };
       axios.request(config)
