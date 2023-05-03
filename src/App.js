@@ -193,6 +193,7 @@ const App = () => {
         "age": ageChecked? ageValue : null,
         "gender": genderChecked? genderValue : null,
         "profession": professionChecked? professionValue : null,
+        "self_care_method": selfCareChecked? selfCareValue : null,
         "discomforts": mt
       }
     }
